@@ -1,6 +1,7 @@
 {
   description = "A Nix flake Java development environment";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/0b4bae10efcae2760534fb0d50d44e732432d28f";
+  # inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/4e7848b";
   outputs =
     { self, ... }@inputs:
     let
