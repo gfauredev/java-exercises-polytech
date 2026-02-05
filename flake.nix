@@ -1,7 +1,8 @@
 {
   description = "A Nix flake Java development environment";
-  # inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/4e7848b";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  # inputs.nixpkgs.url = "github:nixos/nixpkgs/27ff8d8"; # 2025.3.2
+  # inputs.nixpkgs.url = "github:nixos/nixpkgs/4e7848b";
   outputs =
     { self, ... }@inputs:
     let
@@ -11,7 +12,7 @@
         inputs.nixpkgs.lib.genAttrs
           [
             "x86_64-linux"
-            "aarch64-linux"
+            # "aarch64-linux"
           ]
           (
             system:
