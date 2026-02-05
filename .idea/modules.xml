@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/flake-inputs.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/flake-inputs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/pkgs/development/tools/build-managers/gradle/tests/java-application/java-application.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/pkgs/development/tools/build-managers/gradle/tests/java-application/java-application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/nixos/nixos.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/nixos/nixos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/pkgs/pkgs-lib/pkgs-lib.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/pkgs/pkgs-lib/pkgs-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/polytechDiploma.iml" filepath="$PROJECT_DIR$/polytechDiploma.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/pkgs/development/tools/build-managers/gradle/tests/toolchains/toolchains.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/nwl155y14v16b74j1fbc61ryq2dbk5hg-source/pkgs/development/tools/build-managers/gradle/tests/toolchains/toolchains.iml" />
+    </modules>
+  </component>
+</project>
