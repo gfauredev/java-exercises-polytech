@@ -1,8 +1,10 @@
 {
   description = "A Nix flake Java development environment";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  # inputs.nixpkgs.url = "github:nixos/nixpkgs/27ff8d8"; # 2025.3.2
-  # inputs.nixpkgs.url = "github:nixos/nixpkgs/4e7848b";
+  nixConfig = {
+    extra-substituters = [ "https://cache.garnix.io" ];
+    extra-trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
+  };
   outputs =
     { self, ... }@inputs:
     let
