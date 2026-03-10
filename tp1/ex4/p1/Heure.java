@@ -65,14 +65,26 @@ class Heure {
       System.out.println("Erreur: " + e.getMessage());
     }
     System.out.println(h);
+    System.out.println("set 23:59");
     h.setHeuresMinutes(23, 59);
     System.out.println(h);
+    System.out.println("+1");
     h.avancerMinutes(1);
     System.out.println(h);
+    System.out.println("+999");
     h.avancerMinutes(999);
     System.out.println(h);
-    h.avancerMinutes(1235134624);
+    System.out.println("set 23:55");
+    h.setHeuresMinutes(23, 55);
     System.out.println(h);
+    System.out.println("+60");
+    h.avancerMinutes(60);
     System.out.println(h);
+    System.out.println("+1385");
+    h.avancerMinutes(1385);
+    System.out.println(h);
+    // System.out.println(h);
+    // System.out.println(h);
+    // System.out.println(h);
   }
 }
