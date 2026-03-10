@@ -51,8 +51,10 @@ class Heure {
   }
 
   public void avancerMinutes(int m) {
-    this.h = (byte) ((this.h + (this.m + m) / 60) % 24);
-    this.m = (byte) ((this.m + m) % 60);
+    int totalMinutes = this.h * 60 + this.m + m;
+    totalMinutes = ((totalMinutes % 1440) + 1440) % 1440; // "vrai" modulo
+    this.h = (byte) (totalMinutes / 60);
+    this.m = (byte) (totalMinutes % 60);
   }
 
   public void main() {
