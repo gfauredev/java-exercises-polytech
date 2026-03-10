@@ -1,6 +1,5 @@
 package tp1.ex3.p1;
 
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.Getter;
 
@@ -25,7 +24,7 @@ class CompteBancaire {
     if (découvertAutorisé > 0)
       throw new IllegalArgumentException("Le découvert autorisé doit être négatif");
     this.découvertAutorisé = découvertAutorisé;
-    System.out.printf("Compte bancaire créé : %s\n", this.toString());
+    System.out.print("Compte bancaire créé : %s\n".formatted(this.toString()));
   }
 
   String toString() {
@@ -36,7 +35,7 @@ class CompteBancaire {
     if (montant <= 0)
       throw new IllegalArgumentException("Le montant doit être positif");
     this.solde += montant;
-    System.out.printf("Dépot de %f euros effectué sur le compte %s. Nouveau solde : %d euros.\n", montant, this.numéro, this.solde);
+    System.out.print("Dépot de %f euros effectué sur le compte %s. Nouveau solde : %d euros.\n".formatted(montant, this.numéro, this.solde));
   }
 
   public void retirer(float montant) {
@@ -45,7 +44,7 @@ class CompteBancaire {
     if (this.solde - montant < this.découvertAutorisé)
       throw new IllegalArgumentException("Le montant dépasse le découvert autorisé");
     this.solde -= montant;
-    System.out.printf("Retrait de %f euros effectué sur le compte %s. Nouveau solde : %d euros.\n", montant, this.numéro, this.solde);
+    System.out.print("Retrait de %f euros effectué sur le compte %s. Nouveau solde : %d euros.\n".formatted(montant, this.numéro, this.solde));
   }
 
   public void virer(float montant, CompteBancaire compteCible) {
@@ -57,10 +56,10 @@ class CompteBancaire {
       throw new IllegalArgumentException("Le compte cible ne peut pas être nul");
     this.retirer(montant);
     compteCible.deposer(montant);
-    System.out.printf("Virement de %f euros effectué du compte %s. Nouveau solde : %d euros.\n", montant, this.numéro, this.solde);
+    System.out.print("Virement de %f euros effectué du compte %s. Nouveau solde : %d euros.\n".formatted(montant, this.numéro, this.solde));
   }
 
   public void afficherSolde() {
-    System.out.printf("Le solde du compte %s est de %d euros.\n", this.numéro, this.solde);
+    System.out.print("Le solde du compte %s est de %d euros.\n".formatted(this.numéro, this.solde));
   }
 }
