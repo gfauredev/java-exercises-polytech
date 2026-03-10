@@ -30,23 +30,35 @@ class Heure {
   }
 
   public void setHeures(int h) {
+    if (h < 0 || h > 23)
+      throw new IllegalArgumentException("Heure entre 0 et 23");
     this.h = (byte) h;
   }
 
   public void setMinutes(int m) {
+    if (m < 0 || m > 59)
+      throw new IllegalArgumentException("Minutes entre 0 et 59");
     this.m = (byte) m;
   }
 
   public void setHeuresMinutes(int h, int m) {
+    if (h < 0 || h > 23)
+      throw new IllegalArgumentException("Heure entre 0 et 23");
+    if (m < 0 || m > 59)
+      throw new IllegalArgumentException("Minutes entre 0 et 59");
     this.h = (byte) h;
     this.m = (byte) m;
   }
 
   public void main() {
     var h = new Heure();
-    // h.setHeuresMinutes(15, 10);
+    h.setHeuresMinutes(15, 10);
     System.out.println(h);
-    h.setHeuresMinutes(-34, 72);
+    try {
+      h.setHeuresMinutes(-34, 72);
+    } catch (IllegalArgumentException e) {
+      System.out.println("Erreur: " + e.getMessage());
+    }
     System.out.println(h);
   }
 }
