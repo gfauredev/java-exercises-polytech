@@ -36,7 +36,7 @@ public class Livre {
   }
 
   public String toString() {
-    return "Livre %s de %s par %s, ISNB: %d".formatted(titre, genre.label, auteur, isbn);
+    return "Livre %s de %s par %s (ISNB %d)".formatted(titre, genre.label, auteur, isbn);
   }
 
   public void main() {
