@@ -1,6 +1,6 @@
 package cc1.ex3;
 
-import java.time.Duration;
+import java.time.Period;
 import java.time.LocalDate;
 import java.time.format.FormatStyle;
 
@@ -11,12 +11,12 @@ class EmpruntLivre {
   private Livre livre; // Ajouté bien que non précisé dans le sujet, fait plus sens
   private String emprunteur;
   private LocalDate date;
-  private Duration duree;
+  private Period duree;
 
   public EmpruntLivre() {
   }
 
-  public EmpruntLivre(Livre livre, String emprunteur, LocalDate date, Duration duree) {
+  public EmpruntLivre(Livre livre, String emprunteur, LocalDate date, Period duree) {
     this.livre = livre;
     this.emprunteur = emprunteur;
     this.date = date;
@@ -27,7 +27,7 @@ class EmpruntLivre {
     this.livre = livre;
     this.emprunteur = emprunteur;
     this.date = LocalDate.now();
-    this.duree = Duration.ofDays(14);
+    this.duree = Period.ofDays(14);
   }
 
   public float calculerPenaliteRetard(int nombreJoursDeRetard) {
@@ -36,8 +36,8 @@ class EmpruntLivre {
   }
 
   public String toString() {
-    return "%s emprunté par %s le %s pour %s".formatted(livre, emprunteur,
-        date.format(java.time.format.DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)), duree);
+    return "%s emprunté par %s le %s pour %s jour(s)".formatted(livre, emprunteur,
+        date.format(java.time.format.DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)), duree.getDays());
   }
 
   public void main() {
