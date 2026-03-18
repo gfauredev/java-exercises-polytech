@@ -30,6 +30,10 @@ class EmpruntLivre {
     this.duree = Period.ofDays(14);
   }
 
+  public void rallongerEmprunt(int jours) {
+    this.duree = duree.plusDays(jours);
+  } // Fonction ajoutée pour répondre à "rallonger la durée d’emprunt"
+
   public float calculerPenaliteRetard(int nombreJoursDeRetard) {
     // "inférieur à 2" correspond dans ce cas à "égal à 1" ; "inférieur ou égal" ?
     return nombreJoursDeRetard < 2 ? 0 : nombreJoursDeRetard * 0.5f;
@@ -50,6 +54,10 @@ class EmpruntLivre {
     var e2 = new EmpruntLivre(l2, "Jean Bon");
     System.out.println(e1);
     System.out.println(e2);
-    System.out.println(e2);
+    System.out.println("\nRalongement de l’emprunt d’Harry Pottech");
+    e1.rallongerEmprunt(7);
+    System.out.println(e1);
+    System.out.println();
+    System.out.println("Facture pour un retard de 7 jours %3.2f €".formatted(calculerPenaliteRetard(7)));
   }
 }
