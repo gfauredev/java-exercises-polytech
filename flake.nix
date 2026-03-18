@@ -36,7 +36,7 @@
           inherit jdk;
           maven = prev.maven.override { jdk_headless = jdk; };
           gradle = prev.gradle.override { java = jdk; };
-          lombok = prev.lombok.override { inherit jdk; };
+          # lombok = prev.lombok.override { inherit jdk; };
         };
       packages = systems (
         { pkgs }:
@@ -61,14 +61,15 @@
               zlib
               (pkgs.writeShellScriptBin "ide" "idea-oss &")
             ];
-            shellHook =
-              let
-                loadLombok = "-javaagent:${pkgs.lombok}/share/java/lombok.jar";
-                prev = "\${JAVA_TOOL_OPTIONS:+ $JAVA_TOOL_OPTIONS}";
-              in
-              ''
-                export JAVA_TOOL_OPTIONS="${loadLombok}${prev}"
-              '';
+            # shellHook =
+            #   let
+            #     loadLombok = "-javaagent:${pkgs.lombok}/share/java/lombok.jar";
+            #     # loadLombok = "";
+            #     prev = "\${JAVA_TOOL_OPTIONS:+ $JAVA_TOOL_OPTIONS}";
+            #   in
+            #   ''
+            #     export JAVA_TOOL_OPTIONS="${loadLombok}${prev}"
+            #   '';
           };
         }
       );
