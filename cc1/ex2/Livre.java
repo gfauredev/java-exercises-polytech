@@ -2,7 +2,7 @@ package cc1.ex2;
 
 import cc1.ex1.GenreLitteraire;
 
-class Livre {
+public class Livre {
   private String titre;
   private String auteur;
   private long isbn;
