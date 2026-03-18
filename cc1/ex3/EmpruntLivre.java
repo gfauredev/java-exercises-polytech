@@ -2,6 +2,7 @@ package cc1.ex3;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.FormatStyle;
 
 import cc1.ex2.Livre;
 import cc1.ex1.GenreLitteraire;
@@ -13,9 +14,6 @@ class EmpruntLivre {
   private Duration duree;
 
   public EmpruntLivre() {
-    this.emprunteur = "Inconnu";
-    this.date = LocalDate.now();
-    this.duree = Duration.ofDays(14);
   }
 
   public EmpruntLivre(Livre livre, String emprunteur, LocalDate date, Duration duree) {
@@ -38,7 +36,8 @@ class EmpruntLivre {
   }
 
   public String toString() {
-    return "%s emprunté par %s le %s pour %s".formatted(livre, emprunteur, date, duree);
+    return "%s emprunté par %s le %s pour %s".formatted(livre, emprunteur,
+        date.format(java.time.format.DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)), duree);
   }
 
   public void main() {
