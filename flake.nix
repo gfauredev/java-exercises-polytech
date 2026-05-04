@@ -13,8 +13,7 @@
         f:
         inputs.nixpkgs.lib.genAttrs
           [
-            "x86_64-linux"
-            # "aarch64-linux"
+            "x86_64-linux" # "aarch64-linux"
           ]
           (
             system:
@@ -64,7 +63,6 @@
             # shellHook =
             #   let
             #     loadLombok = "-javaagent:${pkgs.lombok}/share/java/lombok.jar";
-            #     # loadLombok = "";
             #     prev = "\${JAVA_TOOL_OPTIONS:+ $JAVA_TOOL_OPTIONS}";
             #   in
             #   ''

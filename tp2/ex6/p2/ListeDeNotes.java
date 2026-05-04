@@ -1,11 +1,14 @@
 package tp2.ex6.p2;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 class ListeDeNotes {
   private List<Float> notes = new ArrayList<>();
+
+  ListeDeNotes(List<Float> notes) {
+    this.notes = notes;
+  }
 
   void add(Float note) {
     notes.add(note);
@@ -23,7 +26,7 @@ class ListeDeNotes {
     return notes.get(index);
   }
 
-  Float getMean() {
+  Float getMoyenne() {
     return (float) notes.stream().mapToDouble(Float::doubleValue)
         .average().orElse(0);
   }
