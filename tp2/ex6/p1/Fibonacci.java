@@ -1,4 +1,4 @@
-package tp1.ex6.p1;
+package tp2.ex6.p1;
 
 import java.util.ArrayList;
 import java.util.Collections;
