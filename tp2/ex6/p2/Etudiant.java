@@ -4,6 +4,7 @@ import java.sql.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class Etudiant {
   private String nom;
@@ -30,14 +31,15 @@ class Etudiant {
   }
 
   Float getMoyennePonderee() {
-    var moyenne = 0f;
-    notes.entrySet().stream().forEach(e -> {
-      for (int i = 0; i <= e.getKey().getCoef(); i++) {
-        moyenne += e.getValue().getMoyenne() * e.getKey().getCoef();
-      }
-
-    });
-    return moyenne;
+    // Moyenne des ListeDeNotes.getMoyenne() pondérées par Matiere.getCoef()
+    final int totalCoefficients = notes.keySet().stream()
+        .mapToInt(Matiere::getCoef)
+        .sum();
+    if (totalCoefficients == 0)
+      return 0f;
+    return (float) (notes.entrySet().stream()
+        .mapToDouble(e -> e.getValue().getMoyenne() * e.getKey().getCoef())
+        .sum() / totalCoefficients);
   }
 
   static void main() {
