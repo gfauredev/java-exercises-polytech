@@ -36,13 +36,17 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/java/app/tp2/ex7/p1</sourceDirectory>
         <testSourceDirectory>test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
+                <configuration>
+                    <includes>
+                        <include>app/tp2/**/*.java</include>
+                    </includes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
