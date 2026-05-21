@@ -1,2 +1,6 @@
 .direnv/
 .idea/
+target/
+.classpath
+.settings/
+.project

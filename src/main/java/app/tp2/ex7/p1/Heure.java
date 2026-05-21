@@ -1,0 +1,92 @@
+package tp2.ex7.p1;
+
+import java.time.LocalTime;
+
+class Heure {
+  private byte h;
+  private byte m;
+
+  public Heure(byte h, byte m) {
+    this.h = h;
+    this.m = m;
+  }
+
+  public Heure() {
+    var t = LocalTime.now();
+    this.h = (byte) t.getHour();
+    this.m = (byte) t.getMinute();
+  }
+
+  public String toString() {
+    return "%d:%d".formatted(h, m);
+  }
+
+  public int getHeures() {
+    return h;
+  }
+
+  public int getMinutes() {
+    return m;
+  }
+
+  public void setHeures(int h) {
+    if (h < 0 || h > 23)
+      throw new IllegalArgumentException("Heure doit être entre 0 et 23!");
+    this.h = (byte) h;
+  }
+
+  public void setMinutes(int m) {
+    if (m < 0 || m > 59)
+      throw new IllegalArgumentException("Minutes doit être entre 0 et 59!");
+    this.m = (byte) m;
+  }
+
+  public void setHeuresMinutes(int h, int m) {
+    if (h < 0 || h > 23)
+      throw new IllegalArgumentException("Heure doit être entre 0 et 23");
+    if (m < 0 || m > 59)
+      throw new IllegalArgumentException("Minutes doit être entre 0 et 59!");
+    this.h = (byte) h;
+    this.m = (byte) m;
+  }
+
+  public void avancerMinutes(int m) {
+    int totalMinutes = this.h * 60 + this.m + m;
+    totalMinutes = ((totalMinutes % 1440) + 1440) % 1440; // "vrai" modulo
+    this.h = (byte) (totalMinutes / 60);
+    this.m = (byte) (totalMinutes % 60);
+  }
+
+  public void main() {
+    var h = new Heure();
+    h.setHeuresMinutes(15, 10);
+    System.out.println(h);
+    try {
+      h.setHeuresMinutes(-34, 72);
+    } catch (IllegalArgumentException e) {
+      System.out.println("Erreur: " + e.getMessage());
+    }
+    System.out.println(h);
+    System.out.println("set 23:59");
+    h.setHeuresMinutes(23, 59);
+    System.out.println(h);
+    System.out.println("+1");
+    h.avancerMinutes(1);
+    System.out.println(h);
+    System.out.println("+999");
+    h.avancerMinutes(999);
+    System.out.println(h);
+    System.out.println("set 23:55");
+    h.setHeuresMinutes(23, 55);
+    System.out.println(h);
+    System.out.println("+60");
+    h.avancerMinutes(60);
+    System.out.println(h);
+    System.out.println("+1385");
+    h.avancerMinutes(1385);
+    System.out.println(h);
+    // System.out.println(h);
+    // System.out.println(h);
+    // System.out.println(h);
+  }
+}

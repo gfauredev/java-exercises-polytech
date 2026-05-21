@@ -1,5 +1,5 @@
 {
-  description = "A Nix flake Java development environment";
+  description = "Nix flake-based Java development environment";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   nixConfig = {
     extra-substituters = [ "https://cache.garnix.io" ];
@@ -8,7 +8,6 @@
   outputs =
     { self, ... }@inputs:
     let
-      javaVersion = 25; # Change this value to update the whole stack
       systems =
         f:
         inputs.nixpkgs.lib.genAttrs
@@ -29,13 +28,12 @@
       overlays.default =
         final: prev:
         let
-          jdk = prev."jdk${toString javaVersion}";
+          jdk = prev."jdk25";
         in
         {
           inherit jdk;
           maven = prev.maven.override { jdk_headless = jdk; };
           gradle = prev.gradle.override { java = jdk; };
-          # lombok = prev.lombok.override { inherit jdk; };
         };
       packages = systems (
         { pkgs }:
@@ -49,25 +47,20 @@
         {
           default = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              jdt-language-server # The Eclipse JDT Language Server
+              jetbrains.idea-oss
+              (pkgs.writeShellScriptBin "ide" "idea-oss &")
+            ];
+            buildInputs = with pkgs; [
+              jdk # Java Development Kit
+              maven # Or 'gradle' if you prefer
               gcc
               gradle
-              jdt-language-server
-              jetbrains.idea-oss
-              jdk
-              maven
               ncurses
               patchelf
               zlib
-              (pkgs.writeShellScriptBin "ide" "idea-oss &")
             ];
-            # shellHook =
-            #   let
-            #     loadLombok = "-javaagent:${pkgs.lombok}/share/java/lombok.jar";
-            #     prev = "\${JAVA_TOOL_OPTIONS:+ $JAVA_TOOL_OPTIONS}";
-            #   in
-            #   ''
-            #     export JAVA_TOOL_OPTIONS="${loadLombok}${prev}"
-            #   '';
+            JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
           };
         }
       );
