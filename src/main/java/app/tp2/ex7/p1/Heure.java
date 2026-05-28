@@ -1,4 +1,4 @@
-package tp2.ex7.p1;
+package app.tp2.ex7.p1;
 
 import java.time.LocalTime;
 
@@ -9,6 +9,11 @@ class Heure {
   public Heure(byte h, byte m) {
     this.h = h;
     this.m = m;
+  }
+
+  public Heure(int h, int m) {
+    this.h = (byte) h;
+    this.m = (byte) m;
   }
 
   public Heure() {
