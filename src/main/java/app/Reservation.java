@@ -5,13 +5,13 @@ import java.time.LocalDate;
 class Reservation {
   private LocalDate date;
   private String client;
-  private boolean reservee;
+  private String chambre;
   private int nombreDeNuits;
 
-  public Reservation(LocalDate date, String client, boolean reservee, int nombreDeNuits) {
+  public Reservation(LocalDate date, String client, String chambre, int nombreDeNuits) {
     this.date = date;
     this.client = client;
-    this.reservee = reservee;
+    this.chambre = chambre;
     this.nombreDeNuits = nombreDeNuits;
   }
 
@@ -23,8 +23,8 @@ class Reservation {
     return client;
   }
 
-  public boolean isReservee() {
-    return reservee;
+  public String getChambre() {
+    return chambre;
   }
 
   public int getNombreDeNuits() {
