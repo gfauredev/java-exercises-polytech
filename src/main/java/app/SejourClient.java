@@ -45,17 +45,45 @@ class SejourClient {
 
   public String toString() {
     String str = "Séjours pour " + this.client + " :" + System.lineSeparator() + System.lineSeparator();
-    for (Reservation resa : reservations) {
-      // TODO x
-      // TODO prixParNuit
-      // TODO prixTotal
-      str += "- [" + resa.getDate() + "] x nuit(s) en chambre " + resa.getChambre() + " @ prixParNuit€ = prixTotal€HT"
-          + System.lineSeparator();
+    for (Reservation resa : reservations)
+      str += "- [" + resa.getDate() + "] x nuit(s) en chambre " + resa.getChambre() + System.lineSeparator();
+    return str;
+  }
+
+  public String recap(Map<String, Chambre> chambres) {
+    String str = "Séjours pour " + this.client + " :" + System.lineSeparator() + System.lineSeparator();
+    Map<LocalDate, List<Reservation>> resasParDate = new HashMap<>();
+    int totalHT = 0;
+    for (Reservation resa : this.reservations) {
+      if (resasParDate.containsKey(resa.getDate()))
+        resasParDate.get(resa.getDate()).add(resa);
+      else
+        resasParDate.put(resa.getDate(), List.of(resa));
+    }
+    for (var date_resa : resasParDate.entrySet()) {
+      Map<Chambre.Type, List<Reservation>> resasParType = new HashMap<>();
+      for (Reservation resa : date_resa.getValue()) {
+        var chambre = chambres.get(resa.getChambre());
+        if (resasParType.containsKey(chambre.getType()))
+          resasParType.get(chambre.getType()).add(resa);
+        else
+          resasParType.put(chambre.getType(), List.of(resa));
+      }
+      for (var type_resa : resasParType.entrySet()) {
+        var chambre = chambres.get(type_resa.getValue().get(0).getChambre());
+        str += "- [" + type_resa.getValue().get(0).getDate() + "] " + type_resa.getValue().size()
+            + " nuit(s) en chambre "
+            + type_resa.getKey().libelle
+            + " @ " + chambre.getPrixParNuit() + "€ = " + chambre.getPrixParNuit() * type_resa.getValue().size()
+            + "€HT"
+            + System.lineSeparator();
+        totalHT += chambre.getPrixParNuit() * type_resa.getValue().size();
+      }
     }
     return str + System.lineSeparator() +
-        "Total HT: " + "TODO" + "€" + System.lineSeparator() +
-        "TVA (10%): " + "TODO" + "€" + System.lineSeparator() +
-        "Total TTC: " + "TODO" + "€" + System.lineSeparator();
+        "Total HT: " + totalHT + "€" + System.lineSeparator() +
+        "TVA (10%): " + totalHT * .1 + "€" + System.lineSeparator() +
+        "Total TTC: " + totalHT + totalHT * .1 + "€" + System.lineSeparator();
   }
 
   public static Map<String, SejourClient> lireCsv(Path fichierCsv, Map<String, Chambre> chambres)
@@ -86,6 +114,7 @@ class SejourClient {
     return map;
   }
 
+  // Ancienne méthode en fonctionnel pur, sans vérification chambres
   public static Map<String, SejourClient> lireCsv(Path fichierCsv)
       throws IOException, ParseException {
     try (Stream<String> lines = Files.lines(fichierCsv)) {
@@ -105,5 +134,9 @@ class SejourClient {
     } catch (IndexOutOfBoundsException err) {
       throw new ParseException("Échec compréhension CSV: 4 colonnes attendues, moins rencontrées", 0);
     }
+  }
+
+  public static void main() {
+
   }
 }
