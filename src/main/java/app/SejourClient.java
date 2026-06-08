@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,10 +41,26 @@ class SejourClient {
     return reservations;
   }
 
-  public static Map<String, SejourClient> lireCsv(Path fichierCsv) // , Map<String, Chambre> chambres)
+  public String toString() {
+    String str = "Séjours pour " + this.client + " :" + System.lineSeparator() + System.lineSeparator();
+    for (Reservation resa : reservations) {
+      // TODO x
+      // TODO prixParNuit
+      // TODO prixTotal
+      str += "- [" + resa.getDate() + "] x nuit(s) en chambre " + resa.getChambre() + " @ prixParNuit€ = prixTotal€HT"
+          + System.lineSeparator();
+    }
+    return str + System.lineSeparator() +
+        "Total HT: " + "TODO" + "€" + System.lineSeparator() +
+        "TVA (10%): " + "TODO" + "€" + System.lineSeparator() +
+        "Total TTC: " + "TODO" + "€" + System.lineSeparator();
+  }
+
+  public static Map<String, SejourClient> lireCsv(Path fichierCsv, Map<String, Chambre> chambres)
       throws IOException, ParseException {
+    var map = new HashMap<String, SejourClient>();
     try (Stream<String> lines = Files.lines(fichierCsv)) {
-      return lines.map(line -> Arrays.asList(line.split(";")))
+      lines.map(line -> Arrays.asList(line.split(";")))
           .collect(Collectors.toMap(l -> l.get(1),
               l -> {
                 // if (!chambres.containsKey(l.get(2)))
@@ -52,6 +69,28 @@ class SejourClient {
                     .of(new Reservation(LocalDate.parse(l.get(0)), l.get(1),
                         l.get(2), Integer.parseInt(l.get(3)))));
               },
+              (l1, l2) -> l1.ajouterReservation(l2.getReservations().get(0))));
+    } catch (IOException err) {
+      System.out.println("Échec lecture CSV: fichier innexistant, innaccessible…");
+      throw err;
+    } catch (DateTimeParseException err) {
+      throw new ParseException("Échec compréhension CSV: date malformée", 0);
+    } catch (NumberFormatException err) {
+      throw new ParseException("Échec compréhension CSV: colonne 4 ne ressemble pas à un nombre", 0);
+    } catch (IndexOutOfBoundsException err) {
+      throw new ParseException("Échec compréhension CSV: 4 colonnes attendues, moins rencontrées", 0);
+    }
+    return map;
+  }
+
+  public static Map<String, SejourClient> lireCsv(Path fichierCsv)
+      throws IOException, ParseException {
+    try (Stream<String> lines = Files.lines(fichierCsv)) {
+      return lines.map(line -> Arrays.asList(line.split(";")))
+          .collect(Collectors.toMap(l -> l.get(1),
+              l -> new SejourClient(l.get(1), List
+                  .of(new Reservation(LocalDate.parse(l.get(0)), l.get(1),
+                      l.get(2), Integer.parseInt(l.get(3))))),
               (l1, l2) -> l1.ajouterReservation(l2.getReservations().get(0))));
     } catch (IOException err) {
       System.out.println("Échec lecture CSV: fichier innexistant, innaccessible…");
