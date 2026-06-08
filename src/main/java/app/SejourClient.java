@@ -1,5 +1,7 @@
 package app;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,17 +61,18 @@ class SejourClient {
   public static Map<String, SejourClient> lireCsv(Path fichierCsv, Map<String, Chambre> chambres)
       throws IOException, ParseException {
     var map = new HashMap<String, SejourClient>();
-    try (Stream<String> lines = Files.lines(fichierCsv)) {
-      lines.map(line -> Arrays.asList(line.split(";")))
-          .collect(Collectors.toMap(l -> l.get(1),
-              l -> {
-                // if (!chambres.containsKey(l.get(2)))
-                // throw new ParseException("Échec compréhension CSV: chambre non reconnue", 0);
-                return new SejourClient(l.get(1), List
-                    .of(new Reservation(LocalDate.parse(l.get(0)), l.get(1),
-                        l.get(2), Integer.parseInt(l.get(3)))));
-              },
-              (l1, l2) -> l1.ajouterReservation(l2.getReservations().get(0))));
+    try (BufferedReader br = new BufferedReader(new FileReader(fichierCsv.toString()))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] col = line.split(";");
+        if (!chambres.containsKey(col[2]))
+          throw new ParseException("Échec compréhension CSV: chambre non reconnue", 0);
+        var resa = new Reservation(LocalDate.parse(col[0]), col[1], col[2], Integer.parseInt(col[3]));
+        if (map.containsKey(col[1]))
+          map.get(col[1]).ajouterReservation(resa);
+        else
+          map.put(col[1], new SejourClient(col[1], List.of(resa)));
+      }
     } catch (IOException err) {
       System.out.println("Échec lecture CSV: fichier innexistant, innaccessible…");
       throw err;
